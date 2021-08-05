@@ -1,7 +1,11 @@
 #include <FS.h>
 
+
+long readByte[4];
+
 void setup() {
   Serial.begin(115200);
+  delay(2000);
   Serial.println();
 
 
@@ -19,14 +23,28 @@ if (!file) {
     return;
 }
 
+  Serial.print("Bytes available: ");
+  Serial.println(file.available());
+
+
   Serial.println("File Content:");
- 
+
   while (file.available()) {
- 
-    Serial.write(file.read());
+
+    readByte[0] = file.read();
+    readByte[1] = file.read();
+    readByte[2] = file.read();
+    readByte[3] = file.read();
+
+    Serial.print(readByte[0],HEX);
+        Serial.print(readByte[1],HEX);
+            Serial.print(readByte[2],HEX);
+                Serial.println(readByte[3],HEX);
   }
  
   file.close();
+
+    Serial.println("Finished!");
 
 }
 
