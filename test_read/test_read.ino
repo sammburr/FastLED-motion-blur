@@ -9,7 +9,7 @@
 CRGB leds[NUM_LEDS];
 
 
-char readByte[4];
+char readByte[363];
 
 void setup() {
   Serial.begin(115200);
@@ -29,7 +29,7 @@ void setup() {
 }
 
 void loop() {
-  File file = SPIFFS.open("/apple.bin", "r");
+  File file = SPIFFS.open("/image.bin", "r");
  
 if (!file) {
     Serial.println("Failed to open file for reading");
@@ -46,9 +46,9 @@ if (!file) {
 //    readByte[0] = file.read();
 //    readByte[1] = file.read();
 //    readByte[2] = file.read();
-//    readByte[3] = file.read();
 
-    file.readBytes(readByte,4);
+
+    //file.readBytes(readByte,3);
     
 
 //    if (readByte[0] <= 0x0F) Serial.print("0");
@@ -57,19 +57,24 @@ if (!file) {
 //        Serial.print(readByte[1],HEX);
 //            if (readByte[2] <= 0x0F) Serial.print("0");
 //            Serial.print(readByte[2],HEX);
-//                if (readByte[3] <= 0x0F) Serial.print("0");
-//                Serial.println(readByte[3],HEX);
 
-      leds[i] = CRGB( readByte[1], readByte[2], readByte[3]);
-      i --;
-      if (i == 0) {
-         FastLED.show();
-         //delay(10);
-        i = NUM_LEDS;};
+      file.readBytes( (char*)leds, NUM_LEDS * 3);
+
+
+      FastLED.show();
+
+//      leds[i] = CRGB( readByte[0], readByte[1], readByte[2]);
+//      i --;
+//      if (i == 0) {
+//         FastLED.show();
+//         //delay(10);
+//        i = NUM_LEDS;};
 
   }
  
   file.close();
+
+  delay(250);
 
     Serial.println("Finished!");
 
