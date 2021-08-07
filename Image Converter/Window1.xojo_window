@@ -25,40 +25,30 @@ Begin Window Window1
    Title           =   "image to 24bitHex"
    Visible         =   True
    Width           =   424
-   Begin Label Label1
+   Begin Rectangle Rectangle1
       AllowAutoDeactivate=   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
+      BorderThickness =   2.0
+      BottomRightColor=   &c00000000
       Enabled         =   True
-      FontName        =   "System"
-      FontSize        =   0.0
-      FontUnit        =   0
-      Height          =   56
+      FillColor       =   &cFFFFFFFF
+      Height          =   45
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   False
-      Left            =   0
+      Left            =   20
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      Multiline       =   False
       Scope           =   0
-      Selectable      =   False
-      TabIndex        =   1
+      TabIndex        =   9
       TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "Drop a Picture Here"
-      TextAlignment   =   2
-      TextColor       =   &c00000000
       Tooltip         =   ""
-      Top             =   0
+      Top             =   11
+      TopLeftColor    =   &c00000000
       Transparent     =   True
-      Underline       =   False
       Visible         =   True
-      Width           =   296
+      Width           =   265
    End
    Begin Canvas Canvas1
       AllowAutoDeactivate=   True
@@ -181,7 +171,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   297
+      Left            =   353
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -193,6 +183,76 @@ Begin Window Window1
       TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
+      Text            =   "0"
+      TextAlignment   =   3
+      TextColor       =   &c00000000
+      Tooltip         =   ""
+      Top             =   11
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   51
+   End
+   Begin Label Label1
+      AllowAutoDeactivate=   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      FontName        =   "System"
+      FontSize        =   0.0
+      FontUnit        =   0
+      Height          =   45
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   "Drop a Picture Here"
+      TextAlignment   =   2
+      TextColor       =   &c00000000
+      Tooltip         =   ""
+      Top             =   11
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   265
+   End
+   Begin Label pixCount1
+      AllowAutoDeactivate=   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      FontName        =   "System"
+      FontSize        =   0.0
+      FontUnit        =   0
+      Height          =   20
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   297
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "pixels"
       TextAlignment   =   0
       TextColor       =   &c00000000
@@ -201,7 +261,7 @@ Begin Window Window1
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   100
+      Width           =   51
    End
 End
 #tag EndWindow
@@ -356,22 +416,15 @@ End
 		  textCol=textCol + ("uint32_t image[] = {")
 		  
 		  For X = 0 To hSize -1
-		    
-		    
 		    For Y = 0 To vSize -1
-		      
 		      pixelArray.Add(surf.Pixel(X,Y))
 		      Var pixelColor As Color = surf.Pixel(X,Y)
 		      Var hexColor As String = pixelColor.ToString
 		      'hexcolor = hexcolor.Replace("&h00", "0x00") //32bit
 		      hexcolor = hexcolor.Replace("&h00", "0x")    //24bit
-		      
 		      textCol=textCol + (hexColor+",")
-		      
 		      count = count +1
-		      
-		    next
-		    
+		    Next
 		  Next
 		  
 		  textCol=textCol + "};"
@@ -411,13 +464,9 @@ End
 		      Var red As Byte = pixelArray(i).Red
 		      Var green As Byte = pixelArray(i).Green
 		      Var blue As Byte = pixelArray(i).Blue
-		      
-		      
 		      stream.WriteUInt8(red)
 		      stream.WriteUInt8(green)
 		      stream.WriteUInt8(blue)
-		      
-		      
 		    Next
 		    stream.Close
 		  End If
@@ -445,19 +494,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events Label1
-	#tag Event
-		Sub DropObject(obj As DragItem, action As Integer)
-		  DropCode(obj)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  me.AcceptPictureDrop
-		  me.AcceptFileDrop(pictures.Jpeg + pictures.Png)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events Canvas1
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
@@ -486,6 +522,19 @@ End
 	#tag Event
 		Sub Action()
 		  SaveFile()
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Label1
+	#tag Event
+		Sub DropObject(obj As DragItem, action As Integer)
+		  DropCode(obj)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  me.AcceptPictureDrop
+		  me.AcceptFileDrop(pictures.Jpeg + pictures.Png)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
