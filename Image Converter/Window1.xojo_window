@@ -10,7 +10,7 @@ Begin Window Window1
    HasBackColor    =   False
    Height          =   758
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   False
@@ -391,9 +391,6 @@ End
 		  
 		  Dim surf as RGBSurface = p.RGBSurface
 		  
-		  
-		  
-		  
 		  Dim hSize as Integer = p.Width
 		  Dim vSize As Integer = p.height
 		  
@@ -435,7 +432,6 @@ End
 		  
 		  Window1.pixCount.Text = Str(count)
 		  
-		  //MessageBox("Array size: "+Str(count))
 		  
 		  debugWindow.Log ("UpDateScreen in (" + Format((Microseconds - ms)/1000,"#0.0") + "ms)")
 		  
